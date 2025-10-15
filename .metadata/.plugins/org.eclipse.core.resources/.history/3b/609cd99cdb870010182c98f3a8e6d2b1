@@ -1,0 +1,84 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public class CafeDao {
+	String driver = "oracle.jdbc.driver.OracleDriver";
+	String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+	String id = "sqlid";
+	String pw = "sqlpw";
+	Connection conn  = null;
+	PreparedStatement ps = null;
+	ResultSet rs = null;
+	
+	public void CafeDao(){
+		try {
+			Class.forName(driver);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void getConnect(){
+		try {
+			conn = DriverManager.getConnection(url,id,pw);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public ArrayList<CafeBean> getAllcafe(){
+		getConnect();
+		ArrayList<CafeBean> lists = new ArrayList<CafeBean>();
+		try {
+			String sql = "select * from cafe order by num asc";
+			ps = conn.prepareStatement(sql);
+			rs = ps.executeQuery();
+			
+			while(rs.next()){
+				int num = rs.getInt("num");
+				String menu = rs.getString("menu");
+				int price = rs.getInt("price");
+				String cname = rs.getString("cname");
+				String open_day = String.valueOf(rs.getDate("open_day"));
+				
+				CafeBean cb = new CafeBean();
+				
+				cb.setNum(num);
+				cb.setMenu(menu);
+				cb.setPrice(price);
+				cb.setCname(cname);
+				cb.setOpen_day(open_day);
+				
+				lists.add(cb);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(ps != null)
+					ps.close();
+				if(rs != null)
+					rs.close();
+				if(conn != null)
+					conn.close();
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return lists;
+	} // getAllcafe
+	
+	public ArrayList<CafeBean> getCafeBySearch(String column,String search_word) {
+		getConnect();
+		ArrayList<CafeBean> lists = new ArrayList<CafeBean>();
+		String sql = "select * from cafe where lower ("+column+ ") like lower (?)";
+		return lists;
+	} // getCafeBySearch
+	
+	
+}

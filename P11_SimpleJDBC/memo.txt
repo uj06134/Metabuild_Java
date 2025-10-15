@@ -1,0 +1,27 @@
+DROP TABLE test;
+
+CREATE TABLE test(
+	num NUMBER,
+	name VARCHAR2(10),
+	addr VARCHAR2(10)
+);
+
+INSERT INTO test VALUES(1,'윤아','서울');
+INSERT INTO test VALUES(2,'아이유','제주');
+INSERT INTO test VALUES(3,'웬디','부산');
+
+SELECT *
+FROM test;
+
+JDBC 프로그래밍 단계
+0. ojdbc8.jar 추가
+1. Oracle 드라이버 로드
+2. 계정에 접속
+3. sql문 작성-분석
+	3.1 ?자리에 값 넣기
+4. sql문 실행 
+	Select: executeQuery()
+	Insert: executeUpdate()
+	Update: executeUpdate()
+	Delete: executeUpdate()
+5. 접속 끊기

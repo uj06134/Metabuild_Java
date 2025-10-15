@@ -1,0 +1,4 @@
+word/단어
+apple/사과
+mouse/쥐
+book/책

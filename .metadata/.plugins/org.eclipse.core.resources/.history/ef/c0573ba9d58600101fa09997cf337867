@@ -1,0 +1,62 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
+public class Insert {
+	public static void main(String[] args) {
+		String driver = "oracle.jdbc.driver.OracleDriver";
+		String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+		String id = "sqlid";
+		String pw = "sqlpw";
+		PreparedStatement ps = null;
+		Connection conn = null;
+		try {
+			// 1. 드라이버 로드
+			Class.forName(driver);
+			
+			// 2. 계정에 접속
+			conn = DriverManager.getConnection(url, id, pw);
+			
+			// 3. sql문 작성-분석
+			int num=5;
+			String name="태연";
+			String addr="경주";
+//			String sql = "insert into test(num, name, addr) values(4,'슬기','경기')";
+//			String sql = "insert into test(num, name, addr) values(" + num + ",'" + name + "','" + addr +"')";
+			String sql = "insert into test(num, name, addr) values(?,?,?)";
+			ps = conn.prepareStatement(sql);
+			ps.setInt(1,num); // 1: ?위치
+			ps.setString(2,name);
+			ps.setString(3,addr);
+			
+			// 4. sql문 실행
+			int cnt = ps.executeUpdate(); // insert문 실행
+			System.out.println(cnt); // cnt: 성공적으로 삽입된 개수 리턴
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			// 5. 접속 끊기
+			if(ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+			if(conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+
+		}
+
+	}
+
+}

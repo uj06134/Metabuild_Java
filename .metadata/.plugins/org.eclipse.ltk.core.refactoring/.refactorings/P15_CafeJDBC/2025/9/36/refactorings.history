@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;CafeBao&apos; to &apos;CafeDao&apos;&#x0D;&#x0A;- Original project: &apos;P15_CafeJDBC&apos;&#x0D;&#x0A;- Original element: &apos;CafeBao&apos;&#x0D;&#x0A;- Renamed element: &apos;CafeDao&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;CafeBao&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{CafeBao.java[CafeBao" matchStrategy="1" name="CafeDao" qualified="false" references="true" similarDeclarations="false" stamp="1756798607127" textual="false" version="1.0"/>
+</session>

@@ -1,0 +1,78 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class CafeMain {
+	Scanner sc = new Scanner(System.in);
+	CafeDao cdao = new CafeDao();
+	public CafeMain() {
+		init();
+	}
+
+	private void init() {
+		while(true){
+			System.out.println("1.모든 메뉴 조회");
+			System.out.println("2.특정 메뉴 조회");
+			System.out.println("3.메뉴 추가");
+			System.out.println("4.메뉴 수정");
+			System.out.println("5.메뉴 삭제");
+			System.out.print("메뉴 선택>> ");
+			int menu = sc.nextInt();
+			switch(menu) {
+			case 1:
+				ArrayList<CafeBean> lists = cdao.getAllcafe();
+				display(lists);
+				break;
+			case 2:
+				getCafeBySearch();
+				break;
+			case 3:
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				break;
+			}
+		}
+	}
+
+	private void getCafeBySearch() {
+		System.out.println("메뉴:1  카페명:2");
+		System.out.print("검색 항목 입력:");
+		int search_num = sc.nextInt();
+		String column = null; 
+		switch(search_num) {
+		case 1:
+			System.out.print("검색할 메뉴 입력:");
+			column = "menu";
+			break;
+			
+		case 2:
+			System.out.print("검색할 카메명 입력:");
+			column = "cname";
+			break;
+		
+		default:
+			System.out.println("1~2만 입력");
+			return;
+		}
+		String search_word = sc.next();
+		
+		
+
+	}
+
+	private void display(ArrayList<CafeBean> lists) {
+		System.out.println("번호\t메뉴\t가격\t카페명\t오픈일");
+		for (int i=0;i<lists.size();i+=1) {
+			CafeBean cb = lists.get(i);
+			System.out.println(cb.getNum()+ "\t" + cb.getMenu() + "\t" + cb.getPrice() + "\t" + cb.getCname() + "\t" + cb.getOpen_day());
+		}
+	} // display
+
+	public static void main(String[] args) {
+		new CafeMain();
+	}
+
+}

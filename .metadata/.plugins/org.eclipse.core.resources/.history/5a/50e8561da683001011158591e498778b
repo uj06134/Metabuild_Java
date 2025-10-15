@@ -1,0 +1,66 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+/*
+1.도서추가 2.도서삭제 3.도서수정 4.도서목록보기 5.종료: 1
+제목 입력: 자바의 정석
+저자 입력: 남궁성
+가격 입력: 30000
+
+1.도서추가 2.도서삭제 3.도서수정 4.도서목록보기 5.종료: 4
+제목        저자      가격
+자바의 정석   남궁성    30000
+
+1.도서추가 2.도서삭제 3.도서수정 4.도서목록보기 5.종료: 3
+수정할 제목 입력: 자바의 정석
+새 가격 입력: 25000
+수정되었습니다.
+
+1.도서추가 2.도서삭제 3.도서수정 4.도서목록보기 5.종료: 2
+삭제할 제목 입력: 자바의 정석
+삭제되었습니다.
+
+1.도서추가 2.도서삭제 3.도서수정 4.도서목록보기 5.종료: 5
+프로그램을 종료합니다.
+*/
+class Book{
+	private String title;
+	private String author;
+	private int price;
+	
+	public Book(String title, String author, int price) {
+		super();
+		this.title = title;
+		this.author = author;
+		this.price = price;
+	}
+}
+public class Ex03_ArrayList {
+	public static void main(String[] args) {
+		ArrayList<Book> al = new ArrayList<Book>();
+		Scanner sc = new Scanner(System.in);
+		String title, author;
+		int price;
+		
+		while(true) {
+			System.out.print("1.도서추가 2.도서삭제 3.도서수정 4.도서목록보기 5.종료: ");
+			int menu = sc.nextInt();
+			switch(menu) {
+				case 1:
+					System.out.print("제목 입력: ");
+					title = sc.next();
+					System.out.print("저자 입력: ");
+					author = sc.next();
+					System.out.print("가격 입력: ");
+					price = sc.nextInt();
+					
+					// 중요
+					Book b = new Book(title, author, price);
+					al.add(b);
+					
+					
+					
+			}
+		} // while 끝
+		
+	}
+}

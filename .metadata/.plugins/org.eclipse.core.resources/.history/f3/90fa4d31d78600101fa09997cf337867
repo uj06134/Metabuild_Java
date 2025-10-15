@@ -1,0 +1,11 @@
+
+public class BookBean { // 한줄의 레코드를 담을 수 있는 클래스
+	private int no;
+	private String title;
+	private String author;
+	private String publisher;
+	private int price;
+	private String pub_day;
+
+	
+}

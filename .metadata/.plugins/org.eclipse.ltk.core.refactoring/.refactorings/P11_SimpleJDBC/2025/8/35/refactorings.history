@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;Delelte&apos; to &apos;Delete&apos;&#x0D;&#x0A;- Original project: &apos;P11_SimpleJDBC&apos;&#x0D;&#x0A;- Original element: &apos;Delelte&apos;&#x0D;&#x0A;- Renamed element: &apos;Delete&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;Delelte&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{Delelte.java[Delelte" matchStrategy="1" name="Delete" qualified="false" references="true" similarDeclarations="false" stamp="1756447365828" textual="false" version="1.0"/>
+</session>

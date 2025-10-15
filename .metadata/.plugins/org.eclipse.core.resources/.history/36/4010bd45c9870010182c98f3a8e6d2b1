@@ -1,0 +1,229 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class AlbumsMain {
+	Scanner sc = new Scanner(System.in);
+	AlbumsDao adao = new AlbumsDao(); // 3. 객체를 관리하는 변수 생성
+	
+	public AlbumsMain(){ // 2. 생성자 만들기
+		init(); // 5
+	}
+	
+	
+	public void init() { // 6
+		while(true) {
+			System.out.println("1.모든 정보 조회");
+			System.out.println("2.조건 조회");
+			System.out.println("3.가격 범위 조건 조회");
+			System.out.println("4.앨범 추가");
+			System.out.println("5.앨범 수정");
+			System.out.println("6.앨범 삭제");
+			System.out.println("7.정렬 조회");
+			System.out.println("8.그룹화");
+			System.out.println("9.프로그램 종료");
+			System.out.print("메뉴 선택>> ");
+			int menu = sc.nextInt();
+			switch(menu) {
+				case 1:
+					ArrayList<AlbumsBean> lists = adao.getAllAlbums(); // 8
+					displayAlbums(lists); // 9
+					break;
+				case 2:
+					getAlbumBySearch();
+					break;
+				case 3:
+					getAlbumByRange();
+					break;
+				case 4:
+					insertAlbum();
+					break;
+				case 5:
+					updateAlbum();
+					break;
+				case 6:
+					deleteAlbum();
+					break;
+				case 7:
+					align();
+					break;
+				case 8:
+					group();
+					break;
+				case 9:
+					System.exit(0);
+			}	
+		}
+	}
+
+	private void group() {
+		System.out.print("그룹화할 회사명 입력:");
+		String group = sc.next();
+		adao.group(group);
+	}
+
+
+	private void align() {
+		System.out.println("정렬할 항목을 선택하세요");
+		System.out.print("번호:1  제목:2  가수명:3  번호입력>>");
+		String column = null, way = null;
+		int align_num = sc.nextInt();
+		switch(align_num) {
+		case 1:
+			column="num";
+			break;
+		case 2:
+			column="song";
+
+			break;
+		case 3:
+			column="singer";
+			break;
+		default:
+			System.out.println("1~3만 입력 가능");
+			return;
+		}
+		
+		System.out.println("정렬 방법을 선택하세요");
+		System.out.print("오름차순:1  내림차순:2  번호입력>>");
+		int align_way = sc.nextInt();
+		switch(align_way) {
+		case 1:
+			way="asc";
+			break;
+		case 2:
+			way ="desc";
+			break;
+		default:
+			System.out.println("1~2만 입력 가능");
+			return;
+		}
+		ArrayList<AlbumsBean> lists = adao.align(column, way);
+		displayAlbums(lists);
+	}
+
+
+	private void deleteAlbum() {
+		int num;
+		System.out.print("삭제할 번호입력:");
+		num = sc.nextInt();
+		adao.deleteAlbum(num);
+	}
+
+
+	private void updateAlbum() {
+		String song, singer, company, pub_day;
+		int price, num;
+		System.out.print("수정할 번호입력:");
+		num = sc.nextInt();
+		
+		System.out.print("제목 입력:");
+		song = sc.next();
+		
+		System.out.print("가수 입력:");
+		singer = sc.next();
+		
+		System.out.print("소속사 입력:");
+		company = sc.next();
+		
+		System.out.print("가격 입력:");
+		price = sc.nextInt();
+		
+		System.out.print("발매일 입력:");
+		pub_day = sc.next();
+		
+		AlbumsBean ab = new AlbumsBean(num, song, singer, company, price, pub_day);
+		adao.updateAlbums(ab);
+
+	}
+
+
+	private void insertAlbum() {
+		String song, singer, company, pub_day;
+		int price;
+		
+		System.out.print("제목 입력:");
+		song = sc.next();
+		
+		System.out.print("가수 입력:");
+		singer = sc.next();
+		
+		System.out.print("소속사 입력:");
+		company = sc.next();
+		
+		System.out.print("가격 입력:");
+		price = sc.nextInt();
+		
+		System.out.print("발매일 입력:");
+		pub_day = sc.next();
+		
+		adao.insertAlbum(song, singer, company, price, pub_day);
+	}
+
+
+	private void getAlbumByRange() {
+		System.out.print("시작 등수: ");
+		int from = sc.nextInt();
+		
+		System.out.print("끝 등수: ");
+		int to = sc.nextInt();
+		
+		ArrayList<AlbumsBean> lists = adao.getAlbumByRange(from,to);
+		
+		System.out.println("등수\t번호\t제목\t가수\t소속사\t가격\t발매일");
+		for (int i=0;i<lists.size();i+=1) {
+			AlbumsBean ab = lists.get(i);
+			System.out.println(ab.getRank() + "\t" + ab.getNum() + "\t" + ab.getSong() +  "\t"  +  ab.getSinger() + "\t" + ab.getCompany() + "\t" + ab.getPrice() + "\t" + ab.getPub_day() );
+		}
+	}
+
+
+	private void getAlbumBySearch() {
+		System.out.println("제목:1  가수:2  회사:3");
+		System.out.print("검색 항목 입력:");
+		int search_num = sc.nextInt();
+		String column = null; 
+		switch(search_num) {
+		case 1:
+			System.out.print("검색할 제목 입력:");
+			column = "song";
+			break;
+			
+		case 2:
+			System.out.print("검색할 가수 입력:");
+			column = "singer";
+			break;
+
+		case 3:
+			System.out.print("검색할 소속사 입력:");
+			column = "company";
+			break;
+		
+		default:
+			System.out.println("1~3만 입력");
+			return;
+		}
+		String search_word = sc.next(); // 정 출판
+		ArrayList<AlbumsBean> lists = adao.getAlbumBySearch(column,search_word); // 검색할 컬럼명과 단어를 넘김
+		if(lists.size() == 0) {
+			System.out.println("해당 단어는 존재하지 않음");
+		}else {
+			displayAlbums(lists);
+		}
+		
+	}
+
+
+	private void displayAlbums(ArrayList<AlbumsBean> lists) { // 10
+		System.out.println("번호\t제목\t가수\t소속사\t가격\t발매일");
+		for (int i=0;i<lists.size();i+=1) {
+			AlbumsBean ab = lists.get(i);
+			System.out.println(ab.getNum() + "\t" + ab.getSong() +  "\t"  +  ab.getSinger() + "\t" + ab.getCompany() + "\t" + ab.getPrice() + "\t" + ab.getPub_day() );
+		}
+	}
+	
+
+	private static void main(String[] args) { // 0. 메인 먼저 실행
+		new AlbumsMain(); // 1. 객체 만들기
+	}
+
+}

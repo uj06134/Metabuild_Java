@@ -1,0 +1,20 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class Delelte {
+	public static void main(String[] args) {
+		String driver = "oracle.jdbc.driver.OracleDriver";
+		String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+		String id = "sqlid";
+		String pw = "sqlpw";
+		Connection conn;
+		
+		try {
+			Class.forName(driver);
+			conn = DriverManager.getConnection(url, id, pw);
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+}

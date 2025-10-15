@@ -1,0 +1,15 @@
+class Person_khj{
+	private String name;
+	private int age;
+}
+class Student_khj extends Person_khj{
+	private int java;
+	private int jsp;
+}
+public class TEST_김훈종 {
+	public static void main(String[] args) {
+		
+	}
+}
+// youn1223@daum.net
+// 2:15

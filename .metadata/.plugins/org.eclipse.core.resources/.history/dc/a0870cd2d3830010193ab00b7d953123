@@ -1,0 +1,139 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+class Person_ysy{
+	private String name;
+	private int age;
+	public Person_ysy(String name, int age) {
+		super();
+		this.name = name;
+		this.age = age;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public void display() {
+		System.out.print(name+","+age+",");
+	}
+}//Person_ysy
+
+class Student_ysy extends Person_ysy{
+	private int java;
+	private int jsp;
+	public Student_ysy(String name, int age, int java, int jsp) {
+		super(name, age);
+		this.java = java;
+		this.jsp = jsp;
+	}
+	public int getJava() {
+		return java;
+	}
+	public void setJava(int java) {
+		this.java = java;
+	}
+	public int getJsp() {
+		return jsp;
+	}
+	public void setJsp(int jsp) {
+		this.jsp = jsp;
+	}
+	public void display() {
+		super.display();
+		System.out.println(java+","+jsp+",평균:"+(java+jsp)/2.0);
+	}
+}//Student_ysy
+
+public class TEST_ANSWER {
+	public static void main(String[] args) {
+		String name,retry;
+		int age,java,jsp,i;
+		boolean flag = false;
+		
+		Scanner sc = new Scanner(System.in);
+		ArrayList<Student_ysy> list = new ArrayList<Student_ysy>();
+		while(true) {
+			System.out.print("이름입력:");
+			name = sc.next();
+			System.out.print("나이입력:");
+			age = sc.nextInt();
+			System.out.print("java입력:");
+			java = sc.nextInt();
+			System.out.print("jsp입력:");
+			jsp = sc.nextInt();
+			
+			Student_ysy s = new Student_ysy(name,age,java,jsp);
+			list.add(s);
+			
+			System.out.print("계속?");
+			retry = sc.next();
+			if(retry.equals("n"))
+				break;
+		}//while
+		
+		System.out.println("ArrayList 사용한 결과");
+		for(i=0;i<list.size();i++) { 
+			Student_ysy one = list.get(i);
+			one.display();
+		}
+		
+		do {
+			flag = false;
+			System.out.print("찾는 이름:");
+			name = sc.next(); // b
+			for(i=0;i<list.size();i++) { 
+				Student_ysy one = list.get(i);
+				if(one.getName().equals(name) ) {
+					System.out.println(one.getAge()+","+one.getJava()+","+one.getJsp());
+					flag = true;
+				}
+			}
+			
+			if(flag == false) {
+				System.out.println("찾는 이름 없음");
+			}
+			
+
+			System.out.print("계속?");
+			retry = sc.next();
+			if(retry.equals("n"))
+				break;
+			
+		}while(true);
+		System.out.println("프로그램을 종료합니다.");
+	}
+}
+
+//
+//youn1223@daum.net
+//2:15 까지 제출
+//이름입력:kim
+//나이입력:10
+//자바입력:70
+//jsp입력:90
+//*******************************
+//계속?y
+//이름입력:choi
+//나이입력:30
+//자바입력:66
+//jsp입력:99
+//*******************************
+//계속?n
+//ArrayList 사용한 결과
+//kim,10,70,90 평균:80.0
+//choi,30,66,99 평균:82.5
+//찾는 이름:choi
+//30,66,99
+//계속?y
+//찾는 이름:jung
+//찾는 이름 없음
+//계속?n
+//프로그램을 종료합니다.

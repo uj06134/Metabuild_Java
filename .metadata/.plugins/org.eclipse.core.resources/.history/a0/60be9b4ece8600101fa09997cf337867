@@ -1,0 +1,150 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public class PersonDao { // DB
+	String driver = "oracle.jdbc.driver.OracleDriver";
+	String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+	String id = "sqlid";
+	String pw = "sqlpw";
+	Connection conn = null;
+	PreparedStatement ps = null;
+	ResultSet rs = null;
+	
+	public PersonDao() {
+		System.out.println("PersonDao 생성자");
+		
+		try {
+			// 1. 드라이버 로드
+			Class.forName(driver);
+			System.out.println("드라이버 로드 성공");
+			
+		} catch (ClassNotFoundException e) {
+			System.out.println("드라이버 로드 실패");
+			e.printStackTrace();
+		}
+	} 
+	// 2. 계정에 접속
+	public void getConnect() {
+		try {
+			conn = DriverManager.getConnection(url,id,pw);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	// lists를 리턴하기 위해 void 대신 lists 타입 
+	public ArrayList<PersonBean> getAllPerson() {
+		getConnect(); // 2. 계정에 접속
+		ArrayList<PersonBean> lists = new ArrayList<PersonBean>();
+		// 3. sql 작성-분석
+		try {
+			String sql = "select * from person";
+			ps = conn.prepareStatement(sql);
+			// 4. sql 실행
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				int num = rs.getInt("num");
+				String name = rs.getString("name");
+				int age = rs.getInt("age");
+				String gender = rs.getString("gender");
+				String birth = rs.getString("birth");
+				
+				PersonBean pb = new PersonBean();
+				pb.setNum(num);
+				pb.setName(name);
+				pb.setAge(age);
+				pb.setGender(gender);
+				pb.setBirth(birth);
+				
+				lists.add(pb);
+				
+//				System.out.println(num + " " + name + " " + age + " " + gender + " " + birth);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(ps != null)
+					ps.close();
+				if(rs != null)
+					rs.close();
+				if(conn != null)
+					conn.close();
+				
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		} // finally
+		return lists;
+	} // getAllPerson
+	public ArrayList<PersonBean> getPersonByGender(String gender) {
+		getConnect();
+		ArrayList<PersonBean> lists = new ArrayList<PersonBean>();
+		try {
+			// 3
+			String sql = "select * from person where gender=?";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1, gender);
+			
+			// 4
+			rs = ps.executeQuery();
+			while(rs.next()) {
+				int num = rs.getInt("num");
+				String name = rs.getString("name");
+				int age = rs.getInt("age");
+				String gender2 = rs.getString("gender");
+				String birth = rs.getString("birth");
+				
+				PersonBean pb = new PersonBean();
+				pb.setNum(num);
+				pb.setName(name);
+				pb.setAge(age);
+				pb.setGender(gender2);
+				pb.setBirth(birth);
+				
+				lists.add(pb);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(ps != null)
+					ps.close();
+				if(rs != null)
+					rs.close();
+				if(conn != null)
+					conn.close();
+				
+			} catch(SQLException e) {
+				e.printStackTrace();
+			}
+		} // finally
+		return lists;
+	} // getPersonByGender
+	
+	public void insertData(String name, int age, String gender, String birth) {
+//		System.out.println(name);
+//		System.out.println(age);
+//		System.out.println(gender);
+//		System.out.println(birth);
+//		String sql = "insert into person~"
+		
+		getConnect();
+		
+		// 3
+		try {
+			String sql = "insert into person(num,name,age,gender,birth) values (perseq.nextval,?,?,?,?)";
+			ps = conn.prepareStatement(sql);
+			ps.setString(1,name); // ? 위치로는 첫번째
+			ps.setInt(2,age);
+			ps.setString(3,gender);
+			ps.setString(4,birth);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+}

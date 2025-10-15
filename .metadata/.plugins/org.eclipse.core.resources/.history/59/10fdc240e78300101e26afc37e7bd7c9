@@ -1,0 +1,21 @@
+
+public class Select {
+	public static void main(String[] args) {
+		String driver = "oracle.jdbc.driver.OracleDriver";
+		String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+		String id = "sqlid";
+		String pw = "sqlpw";
+		
+		// 1. 드라이버 로드
+		try {
+			Class.forName(driver);
+			System.out.println("드라이버 로드 성공");
+		} catch (ClassNotFoundException e) {
+			System.out.println("드라이버 로드 실패");
+			e.printStackTrace();
+		}
+	}
+}
+
+// JDBC: Java Database Connectivity
+//프로젝트명 - bulidpath - configure bulidpath - classparh 누른후 add jar 
